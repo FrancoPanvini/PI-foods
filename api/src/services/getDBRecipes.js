@@ -8,9 +8,7 @@ function getDBRecipes() {
       { model: Ingredient, attributes: ["name"] },
     ],
   });
-  recipes.then(res => res);
   return recipes;
 }
 
-let prueba = getDBRecipes();
-prueba.then((res => console.log(res)));
+module.exports = getDBRecipes;

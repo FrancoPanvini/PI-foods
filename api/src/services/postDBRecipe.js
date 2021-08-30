@@ -1,42 +1,69 @@
 const { Recipe } = require("../db");
 
-/** 
-    ** Params examples
-    title = 'Pizza de ananá'
+//* Params examples
+/** title = 'Pizza de ananá'
     readyInMinutes = 45
     servings = 2
     *! image = url ??
-    ingredients = [{name:'harina',amount:500,unit:'gr'},{{name:'anana',amount:200,unit:'gr'}}]
+    ingredients = [{id:1,amount:500,unit:'gr'},{id:2,amount:200,unit:'gr'}]
     steps = [{number:1,content:'hacer la masa con la harina y agua'},{number:2,content:'agregar el ananá'},{number:3,content:'hornear por 20min'}]
-    diets = [1,3,5,7]
+    diets = [1,2]
 */
 
-function postRecipe(title, readyInMinutes, servings, image, ingredients, steps, diets) {
+function postDBRecipe(title, readyInMinutes, servings, image, ingredients, steps, diets) {
+  //? Create new recipe
   const newRecipe = Recipe.create({ title, readyInMinutes, servings, image });
+
+  //? Set relationes Ingredient,Steps & Diet
   newRecipe.then(
     res => {
       ingredients.map(ingredient =>
-        res.setIngredient({
-          name: ingredient.name,
-          amount: ingredient.amount,
-          unit: ingredient.unit,
+        res.addIngredient(ingredient.id, {
+          through: {
+            amount: ingredient.amount,
+            unit: ingredient.unit,
+          },
         })
       );
-      steps.map(step => res.setStep({ number: step.number, content: step.content }));
-      diets.map(dietId => res.setDiet(dietId));
+
+      steps.map(step => {
+        res.createStep({ number: step.number, content: step.content });
+      });
+
+      res.addDiets(diets);
     },
     err => {
       console.log(`${title} has not been added`);
       throw new Error(err);
     }
   );
-  new newRecipe.then(() => {
+
+  //? Success/Error
+  newRecipe.then(() => {
     console.log(`${title} has been successfully added`);
     return newRecipe;
   });
-  new newRecipe.catch(error => {
+  newRecipe.catch(error => {
+    console.log(error.original.detail);
     throw new Error(error);
   });
 }
 
-module.exports = postRecipe;
+module.exports = postDBRecipe;
+
+postDBRecipe(
+  "Pizza de ananá",
+  45,
+  2,
+  "url/foto",
+  [
+    { id: 1, amount: 500, unit: "gr" },
+    { id: 2, amount: 200, unit: "gr" },
+  ],
+  [
+    { number: 1, content: "hacer la masa con la harina y agua" },
+    { number: 2, content: "agregar el ananá" },
+    { number: 3, content: "hornear por 20min" },
+  ],
+  [1, 2]
+);
