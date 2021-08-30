@@ -1,20 +1,18 @@
 const { Ingredient } = require("../db");
 
-function postDBIngredient(name) {
+async function postDBIngredient(name) {
   //? Create new recipe
-  const newIngredient = Ingredient.create({ name });
-
-  //? Success/Error
-  newIngredient.then(() => {
-    console.log(`${name} has been successfully added to Ingredients`);
-    return newIngredient;
-  });
-  newIngredient.catch(error => {
-    console.log(error.original.detail);
-    throw new Error(error);
-  });
+  try {
+    const exist = await Ingredient.findOne({ where: { name: name.toLowerCase() } });
+    if (exist) {
+      throw new Error(`${name} allready exist`);
+    } else {
+      await Ingredient.create({ name });
+      return `${name} was successfully created`;
+    }
+  } catch (error) {
+    return new Error(error.message);
+  }
 }
 
 module.exports = postDBIngredient;
-
-postDBIngredient("Ananá");
