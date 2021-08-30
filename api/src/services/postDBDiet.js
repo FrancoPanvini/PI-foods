@@ -1,18 +1,18 @@
 const { Diet } = require("../db");
 
-function postDBDiet(name) {
+async function postDBDiet(name) {
   //? Create new recipe
-  const newDiet = Diet.create({ name });
-
-  //? Success/Error
-  newDiet.then(() => {
-    console.log(`${name} has been successfully added to Diets`);
-    return newDiet;
-  });
-  newDiet.catch(error => {
-    console.log(error.original.detail);
-    throw new Error(error);
-  });
+  try {
+    const exist = await Diet.findOne({ where: { name: name.toLowerCase() } });
+    if (exist) {
+      throw new Error(`${name} allready exist`);
+    } else {
+      await Diet.create({ name });
+      return `${name} was successfully created`;
+    }
+  } catch (error) {
+    return new Error(error.message);
+  }
 }
 
 module.exports = postDBDiet;
