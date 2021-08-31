@@ -108,3 +108,6 @@ package-lock.json
 
 # archivos de pruebas
 prueba.js
+
+# archivos de cargas
+uploadDiets.js
