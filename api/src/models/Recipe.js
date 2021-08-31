@@ -8,6 +8,9 @@ module.exports = sequelize => {
       readyInMinutes: { type: DataTypes.INTEGER },
       servings: { type: DataTypes.INTEGER, allowNull: false },
       image: { type: DataTypes.TEXT },
+      healthScore: { type: DataTypes.INTEGER },
+      score: { type: DataTypes.INTEGER },
+      summary: { type: DataTypes.TEXT, allowNull: false },
     },
     { sequelize: sequelize, modelName: "Recipe" }
   );

@@ -5,17 +5,39 @@ const deleteDBRecipe = require("../services/deleteDBRecipe");
 /** title = 'Pizza de ananá'
     readyInMinutes = 45
     servings = 2
-    *! image = url ??
+    image = url
+    healthScore = 90
+    score = 75
+    summary = 'es una pizza con ananá'
     ingredients = [{id:1,amount:500,unit:'gr'},{id:2,amount:200,unit:'gr'}]
     steps = [{number:1,content:'hacer la masa con la harina y agua'},{number:2,content:'agregar el ananá'},{number:3,content:'hornear por 20min'}]
     diets = [1,2]
 */
 
-async function postDBRecipe(title, readyInMinutes, servings, image, ingredients, steps, diets) {
+async function postDBRecipe(
+  title,
+  readyInMinutes,
+  servings,
+  image,
+  healthScore,
+  score,
+  summary,
+  ingredients,
+  steps,
+  diets
+) {
   //? Create new recipe
   let newRecipe = undefined;
   try {
-    newRecipe = await Recipe.create({ title, readyInMinutes, servings, image });
+    newRecipe = await Recipe.create({
+      title,
+      readyInMinutes,
+      servings,
+      image,
+      healthScore,
+      score,
+      summary,
+    });
   } catch (error) {
     return new Error(error.message);
   }
