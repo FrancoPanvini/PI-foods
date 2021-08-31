@@ -18,14 +18,13 @@ async function getDBRecipeInfo(id) {
       include: [
         { model: Diet, attributes: ["name"] },
         { model: Ingredient, attributes: ["name"] },
-        // { model: Ingredient, attributes: ["name"] },
-        // { model: RecipeIngredient, attributes: ["amount", "unit"] },
         { model: Step },
       ],
     });
   } catch (error) {
     return new Error(error.message);
   }
+  if (!recipe) return new Error("id not found");
   recipe = recipe.dataValues;
   recipe = {
     ...recipe,

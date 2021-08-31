@@ -57,13 +57,14 @@ recipes.get("/:id", async (req, res) => {
 
   if (source === "db") {
     let recipe = await getDBRecipeInfo(id);
-    if (recipe instanceof Error) res.status(400).send(recipes.message);
+    console.log(recipe)
+    if (recipe instanceof Error) res.status(404).send(recipe.message);
     res.json(recipe);
   }
 
   if (source === "spoon") {
     let recipe = await getRecipeInfo(id);
-    if (recipe instanceof Error) res.status(400).send(recipes.message);
+    if (recipe instanceof Error) res.status(404).send(recipe.message);
     res.json(recipe);
   }
 });
