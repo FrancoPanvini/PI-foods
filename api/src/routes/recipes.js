@@ -3,6 +3,8 @@ const { Router } = require("express");
 //? require services
 const getDBRecipes = require("../services/getDBRecipes");
 const getRecipes = require("../services/getRecipes");
+const getDBRecipeInfo = require("../services/getDBRecipeInfo");
+const getRecipeInfo = require("../services/getRecipeInfo");
 const postDBRecipe = require("../services/postDBRecipe");
 
 const recipes = Router();
@@ -49,10 +51,22 @@ recipes.get("/spoon", async (req, res) => {
   res.json(recipes);
 });
 
-// recipes.get("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   res.send(id);
-// });
+recipes.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { source } = req.query;
+
+  if (source === "db") {
+    let recipe = await getDBRecipeInfo(id);
+    if (recipe instanceof Error) res.status(400).send(recipes.message);
+    res.json(recipe);
+  }
+
+  if (source === "spoon") {
+    let recipe = await getRecipeInfo(id);
+    if (recipe instanceof Error) res.status(400).send(recipes.message);
+    res.json(recipe);
+  }
+});
 
 recipes.post("/", async (req, res) => {
   const {
