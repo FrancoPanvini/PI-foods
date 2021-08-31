@@ -7,24 +7,40 @@ const postDBRecipe = require("../services/postDBRecipe");
 
 const recipes = Router();
 
-recipes.get("/", async (_req, res) => {
+recipes.get("/", async (req, res) => {
+  const { name } = req.query;
+
   let dbRecipes = await getDBRecipes();
   dbRecipes = dbRecipes.map(recipe => {
     return { ...recipe, source: "db" };
   });
-  let spoonRecipes = await getRecipes(true);
+  let spoonRecipes = await getRecipes(true, false, 300);
   spoonRecipes = spoonRecipes.map(recipe => {
     return { ...recipe, source: "spoon" };
   });
-  res.json([...dbRecipes, ...spoonRecipes]);
+  let recipes = [...dbRecipes, ...spoonRecipes];
+  if (name) {
+    recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
+  }
+  res.json(recipes);
 });
 
-recipes.get("/db", async (_req, res) => {
-  res.json(await getDBRecipes());
+recipes.get("/db", async (req, res) => {
+  const { name } = req.query;
+  let recipes = await getDBRecipes();
+  if (name) {
+    recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
+  }
+  res.json(recipes);
 });
 
-recipes.get("/spoon", async (_req, res) => {
-  res.json(await getRecipes(true));
+recipes.get("/spoon", async (req, res) => {
+  const { name } = req.query;
+  let recipes = await getRecipes(true, false, 300);
+  if (name) {
+    recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
+  }
+  res.json(recipes);
 });
 
 recipes.post("/", async (req, res) => {
