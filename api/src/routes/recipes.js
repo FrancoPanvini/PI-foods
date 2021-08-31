@@ -28,7 +28,7 @@ recipes.get("/", async (req, res) => {
   if (name) {
     recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
   }
-  res.json(recipes);
+  recipes.length > 0 ? res.json(recipes) : res.status(404).send("no matches found...Try again");
 });
 
 recipes.get("/db", async (req, res) => {
@@ -38,7 +38,7 @@ recipes.get("/db", async (req, res) => {
   if (name) {
     recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
   }
-  res.json(recipes);
+  recipes.length > 0 ? res.json(recipes) : res.status(404).send("no matches found...Try again");
 });
 
 recipes.get("/spoon", async (req, res) => {
@@ -48,7 +48,7 @@ recipes.get("/spoon", async (req, res) => {
   if (name) {
     recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
   }
-  res.json(recipes);
+  recipes.length > 0 ? res.json(recipes) : res.status(404).send("no matches found...Try again");
 });
 
 recipes.get("/:id", async (req, res) => {
@@ -57,7 +57,7 @@ recipes.get("/:id", async (req, res) => {
 
   if (source === "db") {
     let recipe = await getDBRecipeInfo(id);
-    console.log(recipe)
+    console.log(recipe);
     if (recipe instanceof Error) res.status(404).send(recipe.message);
     res.json(recipe);
   }
