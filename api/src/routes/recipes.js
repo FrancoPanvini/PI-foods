@@ -7,12 +7,24 @@ const postDBRecipe = require("../services/postDBRecipe");
 
 const recipes = Router();
 
+recipes.get("/", async (_req, res) => {
+  let dbRecipes = await getDBRecipes();
+  dbRecipes = dbRecipes.map(recipe => {
+    return { ...recipe, source: "db" };
+  });
+  let spoonRecipes = await getRecipes(true);
+  spoonRecipes = spoonRecipes.map(recipe => {
+    return { ...recipe, source: "spoon" };
+  });
+  res.json([...dbRecipes, ...spoonRecipes]);
+});
+
 recipes.get("/db", async (_req, res) => {
   res.json(await getDBRecipes());
 });
 
 recipes.get("/spoon", async (_req, res) => {
-  res.json(await getRecipes(true, false, 10));
+  res.json(await getRecipes(true));
 });
 
 recipes.post("/", async (req, res) => {
