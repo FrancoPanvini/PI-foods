@@ -18,6 +18,8 @@ async function getDBRecipeInfo(id) {
       include: [
         { model: Diet, attributes: ["name"] },
         { model: Ingredient, attributes: ["name"] },
+        // { model: Ingredient, attributes: ["name"] },
+        // { model: RecipeIngredient, attributes: ["amount", "unit"] },
         { model: Step },
       ],
     });
@@ -28,7 +30,13 @@ async function getDBRecipeInfo(id) {
   recipe = {
     ...recipe,
     Diets: recipe.Diets.map(diet => diet.name),
-    Ingredients: recipe.Ingredients.map(ingredient => ingredient.name),
+    Ingredients: recipe.Ingredients.map(ingredient => {
+      return {
+        name: ingredient.name,
+        amount: ingredient.RecipeIngredient.amount,
+        unit: ingredient.RecipeIngredient.unit,
+      };
+    }),
     Steps: recipe.Steps.map(step => {
       return { number: step.number, content: step.content };
     }),

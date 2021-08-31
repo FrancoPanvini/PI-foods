@@ -1,4 +1,4 @@
-const { Recipe, Diet, Ingredient } = require("../db");
+const { Recipe, Diet } = require("../db");
 
 async function getDBRecipes() {
   let recipes = undefined;
