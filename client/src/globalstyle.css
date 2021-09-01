@@ -1,0 +1,29 @@
+:root {
+  --italian-flag-green: #008c45;
+  --italian-flag-white: #f4f5f0;
+  --italian-flag-red: #cd212a;
+  --italian-flag-green-traslucent: #008c45c8;
+  --italian-flag-white-traslucent: #f4f5f0c8;
+  --italian-flag-red-traslucent: #cd212ac8;
+}
+
+body {
+  background-image: linear-gradient(
+    45deg,
+    var(--italian-flag-green-traslucent) 16.67%,
+    var(--italian-flag-white-traslucent) 16.67%,
+    var(--italian-flag-white-traslucent) 33.33%,
+    var(--italian-flag-red-traslucent) 33.33%,
+    var(--italian-flag-red-traslucent) 50%,
+    var(--italian-flag-green-traslucent) 50%,
+    var(--italian-flag-green-traslucent) 66.67%,
+    var(--italian-flag-white-traslucent) 66.67%,
+    var(--italian-flag-white-traslucent) 83.33%,
+    var(--italian-flag-red-traslucent) 83.33%,
+    var(--italian-flag-red-traslucent) 100%
+  );
+
+  background-size: 150px 150px;
+}
+
+
