@@ -1,10 +1,23 @@
-import './App.css';
+import React from "react";
+import { Route } from "react-router-dom";
+
+import Landing from "./components/Landing";
+import Navbar from "./components/Navbar";
+import Cards from "./components/Cards";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Food</h1>
-    </div>
+    <React.Fragment>
+      <Route exact path="/">
+        <Landing />
+      </Route>
+      <Route path="/home">
+        <Navbar />
+      </Route>
+      <Route exact path="/home">
+        <Cards />
+      </Route>
+    </React.Fragment>
   );
 }
 
