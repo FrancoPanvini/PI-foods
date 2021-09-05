@@ -1,13 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { Container, Image, Title, Time, Score, HealthScore, Author } from "./styles/CardSC";
 
-function Card({ image, title, readyInMinutes, score, healthScore, source }) {
+function Card({ id, image, title, readyInMinutes, score, healthScore, source }) {
   return (
     <Container>
       <Image src={image} alt="not available" />
       <Title>
-        <h4>{title}</h4>
+        <Link to={`/home/recipe/${source}/${id}`}>
+          <h4>{title}</h4>
+        </Link>
       </Title>
       <Time>
         <p>{readyInMinutes} min</p>
