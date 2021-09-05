@@ -15,12 +15,16 @@ import { Container, CardsContainer } from "./styles/CardsSC";
 function Cards() {
   const dispatch = useDispatch();
 
-  //* Preload recipes
-  useEffect(() => dispatch(getRecipes("", dispatch)), [dispatch]);
+  const { allrecipes } = useSelector(state => state);
+
+  //* Preload recipes if allrecipes is empty
+  useEffect(() => {
+    if (allrecipes.length === 0) {
+      dispatch(getRecipes("", dispatch));
+    }
+  }, [dispatch, allrecipes]);
+
   const { recipes, loading, indexFirstRecipe, indexLastRecipe } = useSelector(state => state);
-  // const pageRecipes = useEffect(() => {
-  //   return recipes.slice(indexFirstRecipe, indexLastRecipe);
-  // }, [indexFirstRecipe, indexLastRecipe, recipes]);
 
   const pageRecipes = recipes.slice(indexFirstRecipe, indexLastRecipe);
 
@@ -34,6 +38,7 @@ function Cards() {
             return (
               <Card
                 key={recipe.source + recipe.id}
+                id={recipe.id}
                 image={recipe.image}
                 title={recipe.title}
                 readyInMinutes={recipe.readyInMinutes}
