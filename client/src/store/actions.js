@@ -6,6 +6,7 @@ export const GETRECIPES = "GETRECIPES";
 export const LOADING = "LOADING";
 export const PAGINATIONINDEXES = "PAGINATIONINDEXES";
 export const ORDER = "ORDER";
+export const FILTERBYDIET = "FILTERBYDIET";
 
 export const getRecipes = () => {
   return function (dispatch) {
@@ -22,4 +23,8 @@ export const setPaginationIndexes = (indexLastRecipe, indexFirstRecipe) => {
 
 export const orderBy = order => {
   return { type: ORDER, payload: order };
+};
+
+export const filterByDiet = diets => {
+  return { type: FILTERBYDIET, payload: diets };
 };

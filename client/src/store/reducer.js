@@ -1,6 +1,12 @@
-import { LOADING, GETRECIPES, PAGINATIONINDEXES, ORDER } from "./actions";
+import { LOADING, GETRECIPES, PAGINATIONINDEXES, ORDER, FILTERBYDIET } from "./actions";
 
-const initialState = { recipes: [], loading: false, indexFirstRecipe: 0, indexLastRecipe: 9 };
+const initialState = {
+  recipes: [],
+  allrecipes: [],
+  loading: false,
+  indexFirstRecipe: 0,
+  indexLastRecipe: 9,
+};
 
 function reducer(state = initialState, action) {
   switch (action.type) {
@@ -8,7 +14,7 @@ function reducer(state = initialState, action) {
       return { ...state, loading: true };
     }
     case GETRECIPES: {
-      return { ...state, recipes: action.payload, loading: false };
+      return { ...state, recipes: action.payload, allrecipes: action.payload, loading: false };
     }
     case PAGINATIONINDEXES: {
       return {
@@ -63,6 +69,13 @@ function reducer(state = initialState, action) {
           return { ...state };
         }
       }
+    }
+    case FILTERBYDIET: {
+      let recipes = state.allrecipes;
+      for (let diet of action.payload) {
+        recipes = recipes?.filter(recipe => recipe.diets?.includes(diet));
+      }
+      return { ...state, recipes: recipes };
     }
     default: {
       return { ...state };

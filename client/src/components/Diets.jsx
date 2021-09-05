@@ -1,10 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 //? SERVICES
 import axiosDiets from "../services/getDiets";
 
+//? ACTIONS
+import { filterByDiet } from "../store/actions";
+
 function Diets() {
+  const dispatch = useDispatch();
+
   const [diets, setDiets] = useState({});
 
   //* Preload object diets w/falses
@@ -19,6 +25,15 @@ function Diets() {
         console.log(err);
       });
   }, []);
+
+  //* Filter when updaditing state diets
+  useEffect(() => {
+    let dietsArray = [];
+    for (let diet in diets) {
+      if (diets[diet]) dietsArray.push(diet);
+    }
+    dispatch(filterByDiet(dietsArray));
+  }, [diets, dispatch]);
 
   //* function to set diets to true/false
   const handleChange = e => {
