@@ -8,10 +8,10 @@ export const PAGINATIONINDEXES = "PAGINATIONINDEXES";
 export const ORDER = "ORDER";
 export const FILTERBYDIET = "FILTERBYDIET";
 
-export const getRecipes = () => {
+export const getRecipes = (name) => {
   return function (dispatch) {
     dispatch({ type: LOADING });
-    axiosRecipes()
+    axiosRecipes(name)
       .then(recipes => dispatch({ type: GETRECIPES, payload: recipes.data }))
       .catch(err => console.log(err));
   };

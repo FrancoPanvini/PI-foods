@@ -16,14 +16,13 @@ function Cards() {
   const dispatch = useDispatch();
 
   //* Preload recipes
-  // eslint-disable-next-line
-  useEffect(() => dispatch(getRecipes(dispatch)), []);
+  useEffect(() => dispatch(getRecipes("", dispatch)), [dispatch]);
   const { recipes, loading, indexFirstRecipe, indexLastRecipe } = useSelector(state => state);
   // const pageRecipes = useEffect(() => {
   //   return recipes.slice(indexFirstRecipe, indexLastRecipe);
   // }, [indexFirstRecipe, indexLastRecipe, recipes]);
 
-  const pageRecipes = recipes.slice(indexFirstRecipe, indexLastRecipe)
+  const pageRecipes = recipes.slice(indexFirstRecipe, indexLastRecipe);
 
   return (
     <Container>

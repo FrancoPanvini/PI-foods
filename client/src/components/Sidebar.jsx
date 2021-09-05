@@ -2,6 +2,7 @@ import React from "react";
 
 //? COMPONENTS
 import Pagination from "./Pagination";
+import Searchbar from "./Searchbar";
 import Order from "./Order";
 import Diets from "./Diets";
 
@@ -12,9 +13,7 @@ function Sidebar() {
   return (
     <Bar>
       <Pagination />
-      <label>
-        search: <input type="search" />
-      </label>
+      <Searchbar />
       <br />
       <br />
       <Order />
