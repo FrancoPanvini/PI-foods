@@ -23,16 +23,16 @@ export const Bar = styled.input`
 `;
 
 export const Button = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
 
   font-family: var(--global-font);
   font-weight: 500;
   font-size: small;
   color: var(--font-color);
 
-  background-color: var(--background-color2);
+  background-color: white;
   opacity: 0.5;
   border: transparent 2px;
   border-radius: 9999px;

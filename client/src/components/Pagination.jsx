@@ -25,14 +25,13 @@ function Pagination() {
     () => dispatch(setPaginationIndexes(indexLastRecipe, indexFirstRecipe)),
     [indexLastRecipe, indexFirstRecipe, dispatch]
   );
-
-  //!  a controlar cuando funcione el search
-  // useEffect(() => {
-  //   console.log('acas s')
-  //   setCurrentPage(1);
-  //   setMaxPageDisplay(5);
-  //   setMinPageDisplay(1);
-  // }, [recipes]);
+  
+  //* Reset to first page when recipes changes
+  useEffect(() => {
+    setCurrentPage(1);
+    setMaxPageDisplay(5);
+    setMinPageDisplay(1);
+  }, [recipesLenght]);
 
   //* Calculate number of posssible pages
   const pageNumbers = [];
