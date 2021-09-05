@@ -1,14 +1,26 @@
 import React from "react";
 
+//? COMPONENTS
+import Pagination from "./Pagination";
+import Order from "./Order";
+import Diets from "./Diets";
+
+//? STYLES
 import { Bar } from "./styles/SideBarSC";
 
 function Sidebar() {
   return (
     <Bar>
-      <label for="searchBar" style={{ color: "white" }}>
-        search:{" "}
+      <Pagination />
+      <label>
+        search: <input type="search" />
       </label>
-      <input type="search" id="searchBar" />
+      <br />
+      <br />
+      <Order />
+      <br />
+      <br />
+      <Diets />
     </Bar>
   );
 }
