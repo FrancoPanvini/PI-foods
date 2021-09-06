@@ -57,7 +57,6 @@ recipes.get("/:id", async (req, res) => {
 
   if (source === "db") {
     let recipe = await getDBRecipeInfo(id);
-    console.log(recipe);
     if (recipe instanceof Error) res.status(404).send(recipe.message);
     res.json(recipe);
   }
