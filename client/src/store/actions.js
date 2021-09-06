@@ -1,8 +1,10 @@
 //? SERVICES
 import axiosRecipes from "../services/getRecipes";
+import axiosDiets from "../services/getDiets";
 
 //? NAME CONSTANTS
 export const GETRECIPES = "GETRECIPES";
+export const GETDIETS = "GETDIETS";
 export const LOADING = "LOADING";
 export const PAGINATIONINDEXES = "PAGINATIONINDEXES";
 export const ORDER = "ORDER";
@@ -13,6 +15,14 @@ export const getRecipes = (name) => {
     dispatch({ type: LOADING });
     axiosRecipes(name)
       .then(recipes => dispatch({ type: GETRECIPES, payload: recipes.data }))
+      .catch(err => console.log(err));
+  };
+};
+
+export const getDiets = () => {
+  return function (dispatch) {
+    axiosDiets()
+      .then(diets => dispatch({ type: GETDIETS, payload: diets.data }))
       .catch(err => console.log(err));
   };
 };
