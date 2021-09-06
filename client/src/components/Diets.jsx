@@ -12,14 +12,13 @@ function Diets() {
 
   //* Preload diets in store
   useEffect(() => {
-    if (!dietsArray) {
+    if (dietsArray.length === 0) {
       dispatch(getDiets(dispatch));
     }
-  }, [dietsArray, dispatch]);
+  }, [dispatch, dietsArray]);
 
   //* Preload object diets w/falses
   useEffect(() => {
-    console.log("dale");
     let objDiets = {};
     dietsArray?.forEach(diet => (objDiets[diet] = false));
     setDiets(objDiets);
