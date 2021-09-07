@@ -12,7 +12,7 @@ function Landing() {
         <Link to="/home">
           <h2>ver todas las recetas</h2>
         </Link>
-        <Link to="/add">
+        <Link to="/home/add">
           <h2>agregar receta</h2>
         </Link>
       </Burbuja>

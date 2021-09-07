@@ -6,6 +6,7 @@ import Landing from "./components/Landing";
 import Navbar from "./components/Navbar";
 import Cards from "./components/Cards";
 import RecipeInfo from "./components/RecipeInfo";
+import AddRecipe from "./components/AddRecipe";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
       </Route>
       <Route path="/home/recipe/:source/:id">
         <RecipeInfo />
+      </Route>
+      <Route path="/home/add">
+        <AddRecipe />
       </Route>
     </React.Fragment>
   );

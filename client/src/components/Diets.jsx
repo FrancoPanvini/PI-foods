@@ -10,17 +10,17 @@ function Diets() {
   const dietsArray = useSelector(state => state.diets);
   const [diets, setDiets] = useState({});
 
-  //* Preload diets in store
+  //* Preload diets in store if empty
   useEffect(() => {
     if (dietsArray.length === 0) {
       dispatch(getDiets(dispatch));
     }
-  }, [dispatch, dietsArray]);
+  }, [dispatch, dietsArray.length]);
 
   //* Preload object diets w/falses
   useEffect(() => {
     let objDiets = {};
-    dietsArray?.forEach(diet => (objDiets[diet] = false));
+    dietsArray?.forEach(diet => (objDiets[diet.name] = false));
     setDiets(objDiets);
   }, [dietsArray]);
 

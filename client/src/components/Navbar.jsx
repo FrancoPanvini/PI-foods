@@ -21,7 +21,7 @@ function Navbar() {
         <NavLink exact to="/shopping">
           <h4>Mis Recetas</h4>
         </NavLink>
-        <NavLink exact to="/add">
+        <NavLink exact to="/home/add">
           <h4>Add Receta</h4>
         </NavLink>
         <NavLink exact to="/shopping">
