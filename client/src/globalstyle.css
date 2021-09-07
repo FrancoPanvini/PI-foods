@@ -1,3 +1,7 @@
+/*? FUENTES de GOOGLE FONTS = ITALIANA - ROBOTO -   */
+@import url("https://fonts.googleapis.com/css2?family=Italiana&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 :root {
   --italian-flag-green: #008c45;
   --italian-flag-white: #f4f5f0;
@@ -5,6 +9,9 @@
   --italian-flag-green-traslucent: #008c45c8;
   --italian-flag-white-traslucent: #f4f5f0c8;
   --italian-flag-red-traslucent: #cd212ac8;
+
+  --headers-font: "Italiana", serif;
+  --text-font: "Roboto", sans-serif;
 }
 
 body {
@@ -26,4 +33,16 @@ body {
   background-size: 150px 150px;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--headers-font);
+}
 
+p,
+span {
+  font-family: var(--text-font);
+}
