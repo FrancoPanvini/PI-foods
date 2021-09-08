@@ -36,7 +36,6 @@ export const NavbarImage = styled.img`
 `;
 
 export const Icon = styled.img`
-  width: 5.5rem;
   height: 5.5rem;
   margin: 0 5px;
 `;

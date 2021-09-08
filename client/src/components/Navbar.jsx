@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import navbarImage from "../images/navbar.png";
-import icon from "../images/chef2.png";
-
+//? STYLES
 import { Nav, NavbarImage, Title, Icon, Bar } from "./styles/NavbarSC";
+import navbarImage from "../images/navbar.png";
+import icon from "../images/chef1fondo.png";
 
 function Navbar() {
   return (
