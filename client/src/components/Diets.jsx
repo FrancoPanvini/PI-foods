@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 //? ACTIONS
 import { getDiets, filterByDiet } from "../store/actions";
 
+//? STYLES
+import { Container } from "./styles/DietsSC";
+
 function Diets() {
   const dispatch = useDispatch();
   const dietsArray = useSelector(state => state.diets);
@@ -41,8 +44,8 @@ function Diets() {
   };
 
   return (
-    <div>
-      <h2>filter by diets</h2>
+    <Container>
+      <h4>FILTER</h4>
       {diets &&
         Object.keys(diets)?.map(diet => {
           return (
@@ -60,7 +63,7 @@ function Diets() {
             </React.Fragment>
           );
         })}
-    </div>
+    </Container>
   );
 }
 
