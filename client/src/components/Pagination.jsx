@@ -25,7 +25,7 @@ function Pagination() {
     () => dispatch(setPaginationIndexes(indexLastRecipe, indexFirstRecipe)),
     [indexLastRecipe, indexFirstRecipe, dispatch]
   );
-  
+
   //* Reset to first page when recipes changes
   useEffect(() => {
     setCurrentPage(1);
@@ -45,16 +45,27 @@ function Pagination() {
   };
 
   //* functions to pass to prev/next page
-  const handlePrev = e => {
+  const handleSupPrev = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+      setMaxPageDisplay(5);
+      setMinPageDisplay(1);
+    }
+  };
+  const handlePrev = () => {
     if (currentPage !== 1) {
       setCurrentPage(currentPage - 1);
       if (currentPage - 1 < minPageDisplay) {
-        setMaxPageDisplay(maxPageDisplay - pagesDisplayLimit);
-        setMinPageDisplay(minPageDisplay - pagesDisplayLimit);
+        setMaxPageDisplay(
+          maxPageDisplay - pagesDisplayLimit < 5 ? 5 : maxPageDisplay - pagesDisplayLimit
+        );
+        setMinPageDisplay(
+          minPageDisplay - pagesDisplayLimit <= 0 ? 1 : minPageDisplay - pagesDisplayLimit
+        );
       }
     }
   };
-  const handleNext = e => {
+  const handleNext = () => {
     if (currentPage !== pageNumbers.length) {
       setCurrentPage(currentPage + 1);
       if (currentPage + 1 > maxPageDisplay) {
@@ -63,10 +74,19 @@ function Pagination() {
       }
     }
   };
+  const handleSupNext = () => {
+    const lastPage = pageNumbers.length;
+    if (currentPage !== lastPage) {
+      setCurrentPage(lastPage);
+      setMaxPageDisplay(lastPage);
+      setMinPageDisplay(lastPage - pagesDisplayLimit + 1);
+    }
+  };
 
   return (
     <nav>
       <PagesList>
+        <PageNumber onClick={handleSupPrev}>{"<<"}</PageNumber>
         <PageNumber onClick={handlePrev}>{"<"}</PageNumber>
         {pageNumbers?.map(number => {
           if (number <= maxPageDisplay && number >= minPageDisplay) {
@@ -85,6 +105,7 @@ function Pagination() {
           }
         })}
         <PageNumber onClick={handleNext}>{">"}</PageNumber>
+        <PageNumber onClick={handleSupNext}>{">>"}</PageNumber>
       </PagesList>
     </nav>
   );
