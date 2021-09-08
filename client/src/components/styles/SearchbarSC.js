@@ -1,17 +1,16 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
 export const Bar = styled.input`
-  //   margin: 0.5rem 1rem 0.5rem 1rem;
-  //   margin: 0;
-  width: 70%;
+  width: 80%;
 
   text-align: center;
   text-transform: Capitalize;
-  //   font-family: var(--global-font);
   font-weight: 500;
-  //   color: var(--font-color);
-
-  //   background-color: transparent;
 
   border: solid 2px var(--other-color);
   border-radius: 2em;
@@ -23,21 +22,19 @@ export const Bar = styled.input`
 `;
 
 export const Button = styled.button`
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  font-family: var(--global-font);
-  font-weight: 500;
-  font-size: small;
-  color: var(--font-color);
+  height: 2rem;
+  width: 2rem;
 
-  background-color: white;
+  background-color: var(--italian-flag-white);
   opacity: 0.5;
   border: transparent 2px;
   border-radius: 9999px;
-  padding: 2px 10px;
-  margin: 0 1rem 0 0;
+  margin: 0;
+  margin-left: 0.3rem;
   cursor: pointer;
 
   &:hover {

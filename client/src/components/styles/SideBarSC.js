@@ -12,6 +12,6 @@ export const Bar = styled.div`
 
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 6rem 2rem 2rem 1fr;
+  grid-template-rows: 4rem 2rem 2rem 1fr;
   // gap: 0 3em;
 `;

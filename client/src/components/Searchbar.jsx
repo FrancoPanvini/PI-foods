@@ -5,7 +5,9 @@ import { useDispatch } from "react-redux";
 import { getRecipes } from "../store/actions";
 
 //? STYLES
-import { Bar, Button } from "./styles/SearchbarSC";
+import { Bar, Button, Container } from "./styles/SearchbarSC";
+import { AiOutlineSearch } from "react-icons/ai";
+import { GrUpdate } from "react-icons/gr";
 
 function Searchbar() {
   const dispatch = useDispatch();
@@ -30,19 +32,30 @@ function Searchbar() {
     setSearch("");
   };
 
+  //* function to dispatch refresh all recipes on click
+  const handleRefresh = () => {
+    dispatch(getRecipes("", dispatch));
+    setSearch("");
+  };
+
   return (
-    <React.Fragment>
+    <Container>
       <Bar
         type="text"
         id="searchbar"
-        placeholder="search..."
+        placeholder="..."
         autocomplete="off"
         value={search}
         onChange={onChange}
         onKeyPress={onKeyPress}
       ></Bar>
-      <Button onClick={handleOnSearch}>lupa</Button>
-    </React.Fragment>
+      <Button onClick={handleOnSearch}>
+        <AiOutlineSearch />
+      </Button>
+      <Button onClick={handleRefresh}>
+        <GrUpdate />
+      </Button>
+    </Container>
   );
 }
 
