@@ -32,7 +32,7 @@ export const NavbarImage = styled.img`
   left: 0;
 
   width: 100vw;
-  height: 25vh;
+  height: 18vh;
 `;
 
 export const Icon = styled.img`
