@@ -38,10 +38,12 @@ export const Burbuja = styled.div`
 
   & h1 {
     font-size: 3rem;
+    margin: 2.5rem 0 2rem 0;
   }
 
   & h4 {
     font-size: 1.5rem;
+    margin: 2rem;
   }
 
   & a {

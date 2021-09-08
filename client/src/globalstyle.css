@@ -40,9 +40,11 @@ h4,
 h5,
 h6 {
   font-family: var(--headers-font);
+  margin: 0;
 }
 
 p,
 span {
   font-family: var(--text-font);
+  margin: 0;
 }
