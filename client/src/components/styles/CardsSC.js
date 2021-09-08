@@ -12,6 +12,6 @@ export const Container = styled.div`
 
 export const CardsContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
 `;
