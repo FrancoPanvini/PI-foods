@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-//! TODO A REVISAR
+//? ANIMATIONS
+import navbarAnimation from "./animations/navbarAnimation";
 
 export const Nav = styled.div`
   position: fixed;
@@ -10,9 +11,6 @@ export const Nav = styled.div`
   z-index: 1;
   max-height: 6rem;
 
-  background-color: black;
-  opacity: 0.98;
-
   display: grid;
   grid-template-columns: 28em 1fr;
   grid-template-rows: 1fr;
@@ -20,28 +18,33 @@ export const Nav = styled.div`
   gap: 0 3em;
   grid-auto-flow: row;
 
-  box-shadow: -5px -5px 10px #9b9b9b, 5px 5px 10px grey;
+  /* Animation */
+  -webkit-animation: slide-bottom 0.5s ease-in both;
+  animation: slide-bottom 0.5s ease-in both;
+  ${navbarAnimation};
+  /* End Animation */
 `;
 
-export const Image = styled.img`
+export const NavbarImage = styled.img`
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 25vh;
+`;
+
+export const Icon = styled.img`
   width: 5.5rem;
   height: 5.5rem;
   margin: 0 5px;
-
-  /* Animation */
-
-  &:hover {
-    -webkit-animation: jello-horizontal 1s ease-in-out;
-    animation: jello-horizontal 1s ease-in-out;
-  }
-
-  /* End Animation */
 `;
 
 export const Title = styled.div`
   display: flex;
   align-items: center;
-  color: white;
+  color: var(--italian-flag-white);
 `;
 
 export const Bar = styled.div`
@@ -50,6 +53,7 @@ export const Bar = styled.div`
   justify-content: flex-start;
 
   a {
+    color: var(--italian-flag-white);
     text-decoration: none;
     margin-right: 1.5rem;
   }
