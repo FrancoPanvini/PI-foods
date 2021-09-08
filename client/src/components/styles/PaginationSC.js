@@ -4,14 +4,23 @@ export const PagesList = styled.ul`
   list-style: none;
   display: flex;
   padding: 0;
+
+  justify-content: center;
+  align-items: stretch;
 `;
 
 export const PageNumber = styled.li`
   padding: 0.5rem;
-  border: 1px solid white;
+  font-size: 1.5rem;
+  color: var(--italian-flag-white);
   cursor: pointer;
 
   &.active {
-    background-color: white;
+    font-weight: bold;
+  }
+
+  &:hover {
+    transition: 0.4s;
+    font-size: 2rem;
   }
 `;
