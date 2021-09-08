@@ -5,6 +5,9 @@ import { useDispatch } from "react-redux";
 //? ACTIONS
 import { orderBy } from "../store/actions";
 
+//? STYLES
+import { Container, Select } from "./styles/OrderSC";
+
 function Order() {
   const dispatch = useDispatch();
   const [order, setOrder] = useState("");
@@ -19,9 +22,9 @@ function Order() {
   };
 
   return (
-    <label>
-      order:
-      <select defaultValue="default" onChange={e => handleOrderChange(e)}>
+    <Container>
+      <h4>ORDER</h4>
+      <Select defaultValue="default" onChange={e => handleOrderChange(e)}>
         <option value="default" disabled>
           by
         </option>
@@ -29,8 +32,8 @@ function Order() {
         <option value="desc">Z-A</option>
         <option value="score">better Spoon Score</option>
         <option value="healthScore">better Health Score</option>
-      </select>
-    </label>
+      </Select>
+    </Container>
   );
 }
 

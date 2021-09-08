@@ -14,8 +14,6 @@ function Sidebar() {
     <Bar>
       <Pagination />
       <Searchbar />
-      <br />
-      <br />
       <Order />
       <br />
       <br />

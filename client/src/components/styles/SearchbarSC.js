@@ -12,7 +12,7 @@ export const Bar = styled.input`
   text-transform: Capitalize;
   font-weight: 500;
 
-  border: solid 2px var(--other-color);
+  border: transparent 2px;
   border-radius: 2em;
   padding: 1em 0;
 
