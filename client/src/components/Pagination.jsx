@@ -85,28 +85,32 @@ function Pagination() {
 
   return (
     <nav>
-      <PagesList>
-        <PageNumber onClick={handleSupPrev}>{"<<"}</PageNumber>
-        <PageNumber onClick={handlePrev}>{"<"}</PageNumber>
-        {pageNumbers?.map(number => {
-          if (number <= maxPageDisplay && number >= minPageDisplay) {
-            return (
-              <PageNumber
-                key={number}
-                id={number}
-                className={currentPage === number ? "active" : null}
-                onClick={handleClick}
-              >
-                {number}
-              </PageNumber>
-            );
-          } else {
-            return null;
-          }
-        })}
-        <PageNumber onClick={handleNext}>{">"}</PageNumber>
-        <PageNumber onClick={handleSupNext}>{">>"}</PageNumber>
-      </PagesList>
+      {pageNumbers.length === 0 ? (
+        <p></p>
+      ) : (
+        <PagesList>
+          <PageNumber onClick={handleSupPrev}>{"<<"}</PageNumber>
+          <PageNumber onClick={handlePrev}>{"<"}</PageNumber>
+          {pageNumbers?.map(number => {
+            if (number <= maxPageDisplay && number >= minPageDisplay) {
+              return (
+                <PageNumber
+                  key={number}
+                  id={number}
+                  className={currentPage === number ? "active" : null}
+                  onClick={handleClick}
+                >
+                  {number}
+                </PageNumber>
+              );
+            } else {
+              return null;
+            }
+          })}
+          <PageNumber onClick={handleNext}>{">"}</PageNumber>
+          <PageNumber onClick={handleSupNext}>{">>"}</PageNumber>
+        </PagesList>
+      )}
     </nav>
   );
 }
