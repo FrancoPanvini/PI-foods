@@ -15,8 +15,6 @@ function Sidebar() {
       <Pagination />
       <Searchbar />
       <Order />
-      <br />
-      <br />
       <Diets />
     </Bar>
   );
