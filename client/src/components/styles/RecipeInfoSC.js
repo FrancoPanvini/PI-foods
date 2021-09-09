@@ -12,7 +12,7 @@ export const Container = styled.div`
 
   display: grid;
   grid-template-columns: 25% 25% 50%;
-  grid-template-rows: 10vh 10vh 10vh 10vh auto auto auto;
+  grid-template-rows: 15vh 10vh 10vh 10vh auto auto auto;
   grid-auto-flow: row;
   grid-template-areas:
     "Title Title Imagen"
