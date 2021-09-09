@@ -10,7 +10,7 @@ import Card from "./Card";
 import Sidebar from "./Sidebar";
 
 //? STYLES
-import { Container, CardsContainer } from "./styles/CardsSC";
+import { Container, CardsContainer, Loader } from "./styles/CardsSC";
 
 function Cards() {
   const dispatch = useDispatch();
@@ -32,7 +32,13 @@ function Cards() {
     <Container>
       <CardsContainer>
         {loading ? (
-          <h1>Loading...</h1>
+          // <Loader></Loader>
+          <Loader>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </Loader>
         ) : (
           pageRecipes?.map(recipe => {
             return (
