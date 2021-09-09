@@ -44,7 +44,8 @@ h6 {
 }
 
 p,
-span {
+span,
+li {
   font-family: var(--text-font);
   margin: 0;
 }

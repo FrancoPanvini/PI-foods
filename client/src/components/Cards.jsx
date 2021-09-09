@@ -32,7 +32,6 @@ function Cards() {
     <Container>
       <CardsContainer>
         {loading ? (
-          // <Loader></Loader>
           <Loader>
             <div></div>
             <div></div>
