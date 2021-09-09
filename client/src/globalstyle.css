@@ -45,7 +45,10 @@ h6 {
 
 p,
 span,
-li {
+li,
+label,
+option,
+select {
   font-family: var(--text-font);
   margin: 0;
 }
