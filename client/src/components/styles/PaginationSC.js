@@ -10,10 +10,10 @@ export const PagesList = styled.ul`
 `;
 
 export const PageNumber = styled.li`
-  padding: 0.4rem;
   font-size: 1rem;
   color: var(--italian-flag-white);
   cursor: pointer;
+  margin: 0.4rem;
 
   &.active {
     font-weight: bold;
@@ -21,6 +21,7 @@ export const PageNumber = styled.li`
 
   &:hover {
     transition: 0.4s;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin: 0.1rem;
   }
 `;
