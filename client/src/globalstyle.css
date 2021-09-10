@@ -48,7 +48,10 @@ span,
 li,
 label,
 option,
-select {
+select,
+input,
+textarea,
+button {
   font-family: var(--text-font);
   margin: 0;
 }

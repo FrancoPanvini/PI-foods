@@ -9,7 +9,11 @@ import axiosIngredients from "../services/getIngredients";
 import postRecipe from "../services/postRecipe";
 
 //? STYLES
-import { Container } from "./styles/AddRecipeSC";
+import { Container, Button, Title, Image, Time, Servings, Score } from "./styles/AddRecipeSC";
+import { HealthScore, Diets, Summary, Ingredients, Procedure } from "./styles/AddRecipeSC";
+import { BiTimeFive } from "react-icons/bi";
+import { BsStar, BsFillPeopleFill } from "react-icons/bs";
+import { GiHealthNormal } from "react-icons/gi";
 
 function AddRecipe() {
   const dispatch = useDispatch();
@@ -64,7 +68,7 @@ function AddRecipe() {
     setInput({ ...input, ingredients: [...input.ingredients, { id: "", amount: 0, unit: "" }] });
   }
 
-  //* Function to rest last step
+  //* Function to rest last ingredient
   function handleClickRestIngredient(e) {
     e.preventDefault();
     const newIngredients = input.ingredients;
@@ -109,68 +113,68 @@ function AddRecipe() {
   }
 
   return (
-    <Container>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <h1>Guarda tu receta!!!</h1>
-          <button type="submit">Cargar</button>
-        </div>
-        <br />
-        <br />
-        <div>
-          <label>
-            Titulo:
-            <input type="text" name="title" onChange={handleOnChange} />
-          </label>
-          <label>
-            Image url:
-            <input type="text" name="image" onChange={handleOnChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Ready in:
-            <input type="number" name="readyInMinutes" onChange={handleOnChange} />
-          </label>
-          <label>
-            Servings:
-            <input type="number" name="servings" onChange={handleOnChange} />
-          </label>
-          <label>
-            Score:
-            <input type="number" name="score" onChange={handleOnChange} />
-          </label>
-          <label>
-            Health score:
-            <input type="number" name="healthScore" onChange={handleOnChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Summary:
-            <textarea name="summary" onChange={handleOnChange} />
-          </label>
-        </div>
-        <br />
-        <br />
-        <div>
-          <label>Diets:</label>
-          {diets.map(diet => (
-            <label key={diet.id}>
-              {diet.name}
-              <input type="checkbox" name={diet.id} onChange={handleDietsOnChange} />
-            </label>
-          ))}
-        </div>
-        <br />
-        <br />
-        <div>
-          <label>Ingredients:</label>
-          <button onClick={handleClickAddIngredient}>+</button>
-          <button onClick={handleClickRestIngredient}>-</button>
+    <form onSubmit={handleSubmit}>
+      <Container>
+        <Title>
+          <label>{"Title"}</label>
+          <input type="text" name="title" onChange={handleOnChange} autoComplete="off" autoFocus />
+        </Title>
+        <Image>
+          <label>Image URL</label>
+          <textarea name="image" onChange={handleOnChange} autoComplete="off" />
+        </Image>
+
+        <Time>
+          <BiTimeFive />
+          <input type="number" name="readyInMinutes" onChange={handleOnChange} autoComplete="off" />
+        </Time>
+        <Servings>
+          <BsFillPeopleFill />
+          <input type="number" name="servings" onChange={handleOnChange} autoComplete="off" />
+        </Servings>
+        <Score>
+          <BsStar />
+          <input type="number" name="score" onChange={handleOnChange} autoComplete="off" />
+        </Score>
+        <HealthScore>
+          <GiHealthNormal />
+          <input type="number" name="healthScore" onChange={handleOnChange} autoComplete="off" />
+        </HealthScore>
+
+        <Diets>
+          <label>{"Diets"}</label>
+          <div>
+            {diets.map(diet => (
+              <label key={diet.id}>
+                <input type="checkbox" name={diet.id} onChange={handleDietsOnChange} />
+                {diet.name}
+              </label>
+            ))}
+          </div>
+        </Diets>
+
+        <Summary>
+          <label>Summary</label>
+          <textarea name="summary" onChange={handleOnChange} autoComplete="off" />
+        </Summary>
+
+        <Ingredients>
+          <div>
+            <label>Ingredients</label>
+            <button onClick={handleClickAddIngredient}>+</button>
+            <button onClick={handleClickRestIngredient}>-</button>
+          </div>
           {input.ingredients.map((_ingredient, index) => (
             <div key={index}>
-              <select id={index} name="id" onChange={handleIngredientsOnChange}>
+              <select
+                id={index}
+                defaultValue="default"
+                name="id"
+                onChange={handleIngredientsOnChange}
+              >
+                <option value="default" disabled>
+                  -
+                </option>
                 {ingredients.map(ingredient => {
                   return (
                     <option key={ingredient.id} value={ingredient.id}>
@@ -179,27 +183,46 @@ function AddRecipe() {
                   );
                 })}
               </select>
-              <input type="number" id={index} name="amount" onChange={handleIngredientsOnChange} />
-              <input type="text" id={index} name="unit" onChange={handleIngredientsOnChange} />
+              <input
+                type="number"
+                id={index}
+                name="amount"
+                onChange={handleIngredientsOnChange}
+                autoComplete="off"
+              />
+              <input
+                type="text"
+                id={index}
+                name="unit"
+                onChange={handleIngredientsOnChange}
+                autoComplete="off"
+              />
             </div>
           ))}
-        </div>
-        <br />
-        <br />
-        <div>
-          <label>Procedure:</label>
+        </Ingredients>
+
+        <Procedure>
+          <label>Procedure</label>
           <button onClick={handleClickAddStep}>+</button>
           <button onClick={handleClickRestStep}>-</button>
           <ol>
             {input.steps.map(step => (
               <li key={step.number}>
-                <input type="text" id={step.number} name="content" onChange={handleStepsOnChange} />
+                <input
+                  type="text"
+                  id={step.number}
+                  name="content"
+                  onChange={handleStepsOnChange}
+                  autoComplete="off"
+                />
               </li>
             ))}
           </ol>
-        </div>
-      </form>
-    </Container>
+        </Procedure>
+
+        <Button type="submit">UPLOAD</Button>
+      </Container>
+    </form>
   );
 }
 
