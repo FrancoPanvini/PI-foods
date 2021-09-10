@@ -10,7 +10,7 @@ async function gerRecipeInfo(id) {
       `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
     );
   } catch (error) {
-    return new Error(error.message);
+    throw new Error("Problems fetching data from API failed");
   }
   recipe = recipe.data;
   recipe = {

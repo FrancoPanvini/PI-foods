@@ -3,14 +3,17 @@ const axios = require("axios");
 require("dotenv").config();
 const API_KEY = process.env.API_KEY;
 
-async function getRecipes(info = false, ingredients = false, number = 100, cuisine = "Italian") {
+async function getRecipes(name) {
+  const number = 100;
+  const cuisine = "Italian";
   let recipes = undefined;
+  name = name ? `&query=${name}` : "";
   try {
     recipes = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=${info}&fillIngredients=${ingredients}&number=${number}&cuisine=${cuisine}`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=${number}&cuisine=${cuisine}${name}`
     );
   } catch (error) {
-    return new Error(error.message);
+    throw new Error("Problems fetching data from API failed");
   }
 
   recipes = recipes.data.results.map(recipe => {
