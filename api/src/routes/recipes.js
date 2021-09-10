@@ -28,17 +28,14 @@ recipes.get("/", async (req, res) => {
   if (name) {
     recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
   }
-  recipes.length > 0 ? res.json(recipes) : res.status(404).send("no matches found...Try again");
+  recipes.length > 0 ? res.json(recipes) : res.status(404).json('NO matches found');
 });
 
+//!OK
 recipes.get("/db", async (req, res) => {
   const { name } = req.query;
-  let recipes = await getDBRecipes();
-  if (recipes instanceof Error) res.status(400).send(recipes.message);
-  if (name) {
-    recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
-  }
-  recipes.length > 0 ? res.json(recipes) : res.status(404).send("no matches found...Try again");
+  let recipes = await getDBRecipes(name);
+  recipes.length > 0 ? res.json(recipes) : res.status(404).json('NO matches found');
 });
 
 recipes.get("/spoon", async (req, res) => {
@@ -48,7 +45,7 @@ recipes.get("/spoon", async (req, res) => {
   if (name) {
     recipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(name.toLowerCase()));
   }
-  recipes.length > 0 ? res.json(recipes) : res.status(404).send("no matches found...Try again");
+  recipes.length > 0 ? res.json(recipes) : res.status(404).json('NO matches found');
 });
 
 recipes.get("/:id", async (req, res) => {
@@ -68,6 +65,7 @@ recipes.get("/:id", async (req, res) => {
   }
 });
 
+//!OK
 recipes.post("/", async (req, res) => {
   const {
     title,
@@ -94,11 +92,9 @@ recipes.post("/", async (req, res) => {
       steps,
       diets
     );
-    response instanceof Error
-      ? res.status(400).send(response.message)
-      : res.status(201).send(response);
-  } catch (err) {
-    console.log(err);
+    res.status(201).send(response);
+  } catch (error) {
+    res.status(409).send(error.message);
   }
 });
 

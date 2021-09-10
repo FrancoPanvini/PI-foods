@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-//? require services
+//? SERVICES
 const getDBDiets = require("../services/getDBDiets");
 const postDBDiet = require("../services/postDBDiet");
 
@@ -14,11 +14,9 @@ diets.post("/", async (req, res) => {
   const { name } = req.body;
   try {
     let response = await postDBDiet(name);
-    response instanceof Error
-      ? res.status(400).send(response.message)
-      : res.status(201).send(response);
-  } catch (err) {
-    console.log(err);
+    res.status(201).send(response);
+  } catch (error) {
+    res.status(409).send(error.message);
   }
 });
 

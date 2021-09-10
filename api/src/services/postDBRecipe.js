@@ -1,19 +1,6 @@
 const { Recipe } = require("../db");
 const deleteDBRecipe = require("../services/deleteDBRecipe");
 
-//* Params examples
-/** title = 'Pizza de ananá'
-    readyInMinutes = 45
-    servings = 2
-    image = url
-    healthScore = 90
-    score = 75
-    summary = 'es una pizza con ananá'
-    ingredients = [{id:1,amount:500,unit:'gr'},{id:2,amount:200,unit:'gr'}]
-    steps = [{number:1,content:'hacer la masa con la harina y agua'},{number:2,content:'agregar el ananá'},{number:3,content:'hornear por 20min'}]
-    diets = [1,2]
-*/
-
 async function postDBRecipe(
   title,
   readyInMinutes,
@@ -26,24 +13,22 @@ async function postDBRecipe(
   steps,
   diets
 ) {
-  //? Create new recipe
-  let newRecipe = undefined;
-  try {
-    newRecipe = await Recipe.create({
-      title,
+
+  //* Create new Recipe
+  const [newRecipe, created] = await Recipe.findOrCreate({
+    where: { title: title.toLowerCase() },
+    defaults: {
       readyInMinutes,
       servings,
       image,
       healthScore,
       score,
       summary,
-    });
-  } catch (error) {
-    return new Error(error.message);
-  }
-
-  //? Set relations Ingredient,Steps & Diet
-
+    },
+  });
+  if (!created) throw new Error(`${title} allready exist`);
+  
+  //* Set relations Ingredient,Steps & Diet
   try {
     for (let ingredient of ingredients) {
       await newRecipe.addIngredient(ingredient.id, {
@@ -55,7 +40,7 @@ async function postDBRecipe(
     }
   } catch (error) {
     await deleteDBRecipe(newRecipe.id);
-    return new Error(error.message);
+    throw new Error('Problems setting Ingredients relations with Recipe');
   }
 
   try {
@@ -64,17 +49,30 @@ async function postDBRecipe(
     }
   } catch (error) {
     await deleteDBRecipe(newRecipe.id);
-    return new Error(error.message);
+    throw new Error('Problems creating Steps of the procedure');
   }
 
   try {
     await newRecipe.addDiets(diets);
   } catch (error) {
     await deleteDBRecipe(newRecipe.id);
-    return new Error(error.message);
+    throw new Error('Problems setting Diets relations with Recipe');
   }
 
-  return `${title} has been successfully added`;
+  return newRecipe;
 }
 
 module.exports = postDBRecipe;
+
+//* Params examples
+/** title = 'Pizza de ananá'
+    readyInMinutes = 45
+    servings = 2
+    image = url
+    healthScore = 90
+    score = 75
+    summary = 'es una pizza con ananá'
+    ingredients = [{id:1,amount:500,unit:'gr'},{id:2,amount:200,unit:'gr'}]
+    steps = [{number:1,content:'hacer la masa con la harina y agua'},{number:2,content:'agregar el ananá'},{number:3,content:'hornear por 20min'}]
+    diets = [1,2]
+*/

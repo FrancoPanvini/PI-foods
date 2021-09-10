@@ -1,25 +1,23 @@
 const { Recipe, Diet } = require("../db");
+const { Op } = require("sequelize");
 
-async function getDBRecipes() {
-  let recipes = undefined;
-  try {
-    recipes = await Recipe.findAll({
-      attributes: ["id", "title", "readyInMinutes", "servings", "image", "healthScore", "score"],
-      include: [{ model: Diet, attributes: ["name"] }],
+async function getDBRecipes(name) {
+  const query = {
+    where: {},
+    attributes: ["id", "title", "readyInMinutes", "servings", "image", "healthScore", "score"],
+    include: [{ model: Diet, attributes: ["name"], through: { attributes: [] } }],
+  };
+  if (name) query.where.title = { [Op.substring]: name.toLowerCase() };
+  const recipes = await Recipe.findAll(query);
+
+  return recipes
+    .map(recipe => recipe.dataValues)
+    .map(recipe => {
+      return {
+        ...recipe,
+        Diets: recipe.Diets.map(diet => diet.name),
+      };
     });
-  } catch (error) {
-    return new Error(error.message);
-  }
-
-  recipes = recipes.map(recipe => recipe.dataValues);
-
-  recipes = recipes.map(recipe => {
-    return {
-      ...recipe,
-      Diets: recipe.Diets.map(diet => diet.name),
-    };
-  });
-  return recipes;
 }
 
 module.exports = getDBRecipes;
