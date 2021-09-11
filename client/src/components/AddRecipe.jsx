@@ -15,7 +15,6 @@ import { HealthScore, Diets, Summary, Ingredients, Procedure } from "./styles/Ad
 import { BiTimeFive } from "react-icons/bi";
 import { BsStar, BsFillPeopleFill } from "react-icons/bs";
 import { GiHealthNormal, GiCheckMark } from "react-icons/gi";
-import { CgCheckO } from "react-icons/cg";
 
 function AddRecipe() {
   const dispatch = useDispatch();
