@@ -7,13 +7,15 @@ import { getDiets } from "../store/actions";
 //? SERVICES
 import axiosIngredients from "../services/getIngredients";
 import postRecipe from "../services/postRecipe";
+import validateForm from "../services/validateForm";
 
 //? STYLES
 import { Container, Button, Title, Image, Time, Servings, Score } from "./styles/AddRecipeSC";
 import { HealthScore, Diets, Summary, Ingredients, Procedure } from "./styles/AddRecipeSC";
 import { BiTimeFive } from "react-icons/bi";
 import { BsStar, BsFillPeopleFill } from "react-icons/bs";
-import { GiHealthNormal } from "react-icons/gi";
+import { GiHealthNormal, GiCheckMark } from "react-icons/gi";
+import { CgCheckO } from "react-icons/cg";
 
 function AddRecipe() {
   const dispatch = useDispatch();
@@ -32,6 +34,8 @@ function AddRecipe() {
     steps: [{ number: 1, content: "" }],
     diets: [],
   });
+  const [errors, setErrors] = useState({});
+  const [added, setAdded] = useState(false);
 
   //* Preload diets in store if empty
   useEffect(() => {
@@ -84,9 +88,7 @@ function AddRecipe() {
   //* Function to set input on diets change
   function handleDietsOnChange(e) {
     let dietsArray = input.diets;
-    dietsArray = e.target.checked
-      ? [...dietsArray, e.target.name]
-      : dietsArray.filter(diet => diet !== e.target.name);
+    dietsArray = e.target.checked ? [...dietsArray, e.target.name] : dietsArray.filter(diet => diet !== e.target.name);
     setInput({ ...input, diets: dietsArray });
   }
 
@@ -107,9 +109,15 @@ function AddRecipe() {
   //* Function to submit
   function handleSubmit(e) {
     e.preventDefault();
-    postRecipe(input)
-      .then(() => console.log("succesfully added"))
-      .catch(error => console.error(error));
+    const errors = validateForm(input);
+    setErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      postRecipe(input)
+        .then(() => {
+          setAdded(true);
+        })
+        .catch(error => console.error(error));
+    }
   }
 
   return (
@@ -117,6 +125,7 @@ function AddRecipe() {
       <Container>
         <Title>
           <label>{"Title"}</label>
+          {errors.title && <span className="error"> {errors.title}</span>}
           <input type="text" name="title" onChange={handleOnChange} autoComplete="off" autoFocus />
         </Title>
         <Image>
@@ -126,18 +135,22 @@ function AddRecipe() {
 
         <Time>
           <BiTimeFive />
+          {errors.readyInMinutes && <p className="error"> {errors.readyInMinutes}</p>}
           <input type="number" name="readyInMinutes" onChange={handleOnChange} autoComplete="off" />
         </Time>
         <Servings>
           <BsFillPeopleFill />
+          {errors.servings && <p className="error"> {errors.servings}</p>}
           <input type="number" name="servings" onChange={handleOnChange} autoComplete="off" />
         </Servings>
         <Score>
           <BsStar />
+          {errors.score && <p className="error"> {errors.score}</p>}
           <input type="number" name="score" onChange={handleOnChange} autoComplete="off" />
         </Score>
         <HealthScore>
           <GiHealthNormal />
+          {errors.healthScore && <p className="error"> {errors.healthScore}</p>}
           <input type="number" name="healthScore" onChange={handleOnChange} autoComplete="off" />
         </HealthScore>
 
@@ -155,6 +168,7 @@ function AddRecipe() {
 
         <Summary>
           <label>Summary</label>
+          {errors.summary && <span className="error"> {errors.summary}</span>}
           <textarea name="summary" onChange={handleOnChange} autoComplete="off" />
         </Summary>
 
@@ -166,12 +180,7 @@ function AddRecipe() {
           </div>
           {input.ingredients.map((_ingredient, index) => (
             <div key={index}>
-              <select
-                id={index}
-                defaultValue="default"
-                name="id"
-                onChange={handleIngredientsOnChange}
-              >
+              <select id={index} defaultValue="default" name="id" onChange={handleIngredientsOnChange}>
                 <option value="default" disabled>
                   -
                 </option>
@@ -183,20 +192,8 @@ function AddRecipe() {
                   );
                 })}
               </select>
-              <input
-                type="number"
-                id={index}
-                name="amount"
-                onChange={handleIngredientsOnChange}
-                autoComplete="off"
-              />
-              <input
-                type="text"
-                id={index}
-                name="unit"
-                onChange={handleIngredientsOnChange}
-                autoComplete="off"
-              />
+              <input type="number" id={index} name="amount" onChange={handleIngredientsOnChange} autoComplete="off" />
+              <input type="text" id={index} name="unit" onChange={handleIngredientsOnChange} autoComplete="off" />
             </div>
           ))}
         </Ingredients>
@@ -208,19 +205,15 @@ function AddRecipe() {
           <ol>
             {input.steps.map(step => (
               <li key={step.number}>
-                <input
-                  type="text"
-                  id={step.number}
-                  name="content"
-                  onChange={handleStepsOnChange}
-                  autoComplete="off"
-                />
+                <input type="text" id={step.number} name="content" onChange={handleStepsOnChange} autoComplete="off" />
               </li>
             ))}
           </ol>
         </Procedure>
 
-        <Button type="submit">UPLOAD</Button>
+        <Button type="submit" className={added ? "uploaded" : false} disabled={added}>
+          {added ? <GiCheckMark /> : <span>UPLOAD</span>}
+        </Button>
       </Container>
     </form>
   );

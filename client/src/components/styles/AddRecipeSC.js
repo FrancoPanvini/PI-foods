@@ -37,6 +37,19 @@ export const Container = styled.div`
   animation: fade-in 0.8s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   ${cardAnimation};
   /* End Animation */
+
+  & .error {
+    color: var(--italian-flag-red);
+    font-weight: bold;
+    font-size: 0.8rem;
+  }
+
+  & .uploaded {
+    background-color: var(--italian-flag-green);
+    font-size: 1.5rem;
+    transition: 1s;
+    cursor: default;
+  }
 `;
 
 export const Title = styled.div`
@@ -97,6 +110,7 @@ export const Time = styled.div`
     display: block;
     width: 4vw;
     text-align: center;
+    margin: auto;
 
     border: none;
     border-bottom: 1px solid grey;
@@ -122,6 +136,7 @@ export const Servings = styled.div`
     display: block;
     width: 4vw;
     text-align: center;
+    margin: auto;
 
     border: none;
     border-bottom: 1px solid grey;
@@ -147,6 +162,7 @@ export const Score = styled.div`
     display: block;
     width: 4vw;
     text-align: center;
+    margin: auto;
 
     border: none;
     border-bottom: 1px solid grey;
@@ -172,6 +188,7 @@ export const HealthScore = styled.div`
     display: block;
     width: 4vw;
     text-align: center;
+    margin: auto;
 
     border: none;
     border-bottom: 1px solid grey;
