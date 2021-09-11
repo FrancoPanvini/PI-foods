@@ -1,10 +1,11 @@
-import { LOADING, GETRECIPES, PAGINATIONINDEXES, ORDER, FILTERBYDIET, GETDIETS } from "./actions";
+import { LOADING, NORESULTS, GETRECIPES, PAGINATIONINDEXES, ORDER, FILTERBYDIET, GETDIETS } from "./actions";
 
 const initialState = {
   recipes: [],
   allrecipes: [],
   diets: [],
   loading: false,
+  noresults: false,
   indexFirstRecipe: 0,
   indexLastRecipe: 9,
 };
@@ -14,8 +15,11 @@ function reducer(state = initialState, action) {
     case LOADING: {
       return { ...state, loading: true };
     }
+    case NORESULTS: {
+      return { ...state, noresults: true, loading: false };
+    }
     case GETRECIPES: {
-      return { ...state, recipes: action.payload, allrecipes: action.payload, loading: false };
+      return { ...state, recipes: action.payload, allrecipes: action.payload, loading: false, noresults: false };
     }
     case GETDIETS: {
       return { ...state, diets: action.payload };

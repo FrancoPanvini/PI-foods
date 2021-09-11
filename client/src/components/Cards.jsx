@@ -10,7 +10,9 @@ import Card from "./Card";
 import Sidebar from "./Sidebar";
 
 //? STYLES
-import { Container, CardsContainer, Loader } from "./styles/CardsSC";
+import { Container, CardsContainer, Loader, Chef, Burbuja } from "./styles/CardsSC";
+import chef from "../images/chef2.png";
+import burbuja from "../images/burbuja.png";
 
 function Cards() {
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ function Cards() {
     }
   }, [dispatch, allrecipes]);
 
-  const { recipes, loading, indexFirstRecipe, indexLastRecipe } = useSelector(state => state);
+  const { recipes, loading, noresults, indexFirstRecipe, indexLastRecipe } = useSelector(state => state);
 
   const pageRecipes = recipes.slice(indexFirstRecipe, indexLastRecipe);
 
@@ -38,6 +40,17 @@ function Cards() {
             <div></div>
             <div></div>
           </Loader>
+        ) : noresults ? (
+          <div>
+            <Chef src={chef} alt="not available" />
+            <Burbuja>
+              <img src={burbuja} alt="not available" />
+              <div>
+                <h1>Mi scusi!!!</h1>
+                <h4>no encontramos coincidencias</h4>
+              </div>
+            </Burbuja>
+          </div>
         ) : (
           pageRecipes?.map(recipe => {
             return (

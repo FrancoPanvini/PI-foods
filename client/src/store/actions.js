@@ -6,16 +6,24 @@ import axiosDiets from "../services/getDiets";
 export const GETRECIPES = "GETRECIPES";
 export const GETDIETS = "GETDIETS";
 export const LOADING = "LOADING";
+export const NORESULTS = "NORESULTS";
 export const PAGINATIONINDEXES = "PAGINATIONINDEXES";
 export const ORDER = "ORDER";
 export const FILTERBYDIET = "FILTERBYDIET";
 
-export const getRecipes = (name) => {
+export const getRecipes = name => {
   return function (dispatch) {
     dispatch({ type: LOADING });
     axiosRecipes(name)
-      .then(recipes => dispatch({ type: GETRECIPES, payload: recipes.data }))
-      .catch(err => console.log(err));
+      .then(respond => {
+        dispatch({ type: GETRECIPES, payload: respond.data });
+      })
+      .catch(error => {
+        if (error.response.data === "NO matches found") {
+          dispatch({ type: NORESULTS });
+        }
+        console.log(error.response.data);
+      });
   };
 };
 

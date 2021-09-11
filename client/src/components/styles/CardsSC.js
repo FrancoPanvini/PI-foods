@@ -50,3 +50,40 @@ export const Loader = styled.div`
     }
   }
 `;
+
+export const Chef = styled.img`
+  position: relative;
+  top: 20vh;
+  left: 10vw;
+  height: 50vh;
+`;
+
+export const Burbuja = styled.div`
+  position: absolute;
+  top: 0vh;
+  left: 27vw;
+
+  & img {
+    height: 40vh;
+    width: 30vw;
+  }
+
+  & div {
+    position: absolute;
+    top: 0vh;
+    left: 0vw;
+    width: 30vw;
+
+    text-align: center;
+  }
+
+  & h1 {
+    font-size: 3rem;
+    margin: 2.5rem 0 2rem 0;
+  }
+
+  & h4 {
+    font-size: 1.5rem;
+    margin: 2rem;
+  }
+`;
