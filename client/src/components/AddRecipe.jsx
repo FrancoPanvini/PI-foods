@@ -47,7 +47,7 @@ function AddRecipe() {
   useEffect(() => {
     axiosIngredients()
       .then(res => setIngredients(res.data))
-      .catch(err => console.error(err));
+      .catch(err => console.log(err));
   }, []);
 
   //* Function to add more steps
@@ -123,13 +123,13 @@ function AddRecipe() {
     <form onSubmit={handleSubmit}>
       <Container>
         <Title>
-          <label>{"Title"}</label>
+          <label for="title">{"Title"}</label>
           {errors.title && <span className="error"> {errors.title}</span>}
-          <input type="text" name="title" onChange={handleOnChange} autoComplete="off" autoFocus />
+          <input type="text" name="title" id="title" onChange={handleOnChange} autoComplete="off" autoFocus />
         </Title>
         <Image>
-          <label>Image URL</label>
-          <textarea name="image" onChange={handleOnChange} autoComplete="off" />
+          <label for="image">Image URL</label>
+          <textarea name="image" id="image" onChange={handleOnChange} autoComplete="off" />
         </Image>
 
         <Time>
@@ -166,9 +166,9 @@ function AddRecipe() {
         </Diets>
 
         <Summary>
-          <label>Summary</label>
+          <label for="summary">Summary</label>
           {errors.summary && <span className="error"> {errors.summary}</span>}
-          <textarea name="summary" onChange={handleOnChange} autoComplete="off" />
+          <textarea name="summary" id="summary" onChange={handleOnChange} autoComplete="off" />
         </Summary>
 
         <Ingredients>
