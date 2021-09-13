@@ -1,19 +1,7 @@
 const { Recipe } = require("../db");
 const deleteDBRecipe = require("../services/deleteDBRecipe");
 
-async function postDBRecipe(
-  title,
-  readyInMinutes,
-  servings,
-  image,
-  healthScore,
-  score,
-  summary,
-  ingredients,
-  steps,
-  diets
-) {
-
+async function postDBRecipe(title, readyInMinutes, servings, image, healthScore, score, summary, ingredients, steps, diets) {
   //* Create new Recipe
   const [newRecipe, created] = await Recipe.findOrCreate({
     where: { title: title.toLowerCase() },
@@ -27,7 +15,7 @@ async function postDBRecipe(
     },
   });
   if (!created) throw new Error(`${title} allready exist`);
-  
+
   //* Set relations Ingredient,Steps & Diet
   try {
     for (let ingredient of ingredients) {
@@ -40,7 +28,7 @@ async function postDBRecipe(
     }
   } catch (error) {
     await deleteDBRecipe(newRecipe.id);
-    throw new Error('Problems setting Ingredients relations with Recipe');
+    throw new Error("Problems setting Ingredients relations with Recipe");
   }
 
   try {
@@ -49,14 +37,14 @@ async function postDBRecipe(
     }
   } catch (error) {
     await deleteDBRecipe(newRecipe.id);
-    throw new Error('Problems creating Steps of the procedure');
+    throw new Error("Problems creating Steps of the procedure");
   }
 
   try {
     await newRecipe.addDiets(diets);
   } catch (error) {
     await deleteDBRecipe(newRecipe.id);
-    throw new Error('Problems setting Diets relations with Recipe');
+    throw new Error("Problems setting Diets relations with Recipe");
   }
 
   return newRecipe;

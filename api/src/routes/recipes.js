@@ -61,31 +61,9 @@ recipes.get("/:id", async (req, res) => {
 });
 
 recipes.post("/", async (req, res) => {
-  const {
-    title,
-    readyInMinutes,
-    servings,
-    image,
-    healthScore,
-    score,
-    summary,
-    ingredients,
-    steps,
-    diets,
-  } = req.body;
+  const { title, readyInMinutes, servings, image, healthScore, score, summary, ingredients, steps, diets } = req.body;
   try {
-    let response = await postDBRecipe(
-      title,
-      readyInMinutes,
-      servings,
-      image,
-      healthScore,
-      score,
-      summary,
-      ingredients,
-      steps,
-      diets
-    );
+    let response = await postDBRecipe(title, readyInMinutes, servings, image, healthScore, score, summary, ingredients, steps, diets);
     res.status(201).send(response);
   } catch (error) {
     res.status(409).send(error.message);
