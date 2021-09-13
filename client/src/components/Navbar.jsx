@@ -23,10 +23,10 @@ function Navbar() {
         <NavLink exact to="/home/add">
           <h4>Add Receta</h4>
         </NavLink>
-        <NavLink exact to="/shopping">
+        <NavLink exact to="/about">
           <h4>About me</h4>
         </NavLink>
-        <NavLink exact to="/shopping">
+        <NavLink exact to="/help">
           <h4>Help</h4>
         </NavLink>
       </Bar>
