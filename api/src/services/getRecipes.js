@@ -13,6 +13,7 @@ async function getRecipes(name) {
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=${number}&cuisine=${cuisine}${name}`
     );
     recipes = recipes.data.results;
+    /*
     if (name === "") {
       const recipes2 = await axios.get(
         `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=${number}&offset=${number}&cuisine=${cuisine}`
@@ -24,6 +25,7 @@ async function getRecipes(name) {
       );
       recipes = [...recipes, ...recipes2.data.results, ...recipes3.data.results];
     }
+    */
   } catch (error) {
     console.log(error.message);
     throw new Error("Problems fetching data from API failed");

@@ -6,6 +6,7 @@ const getRecipes = require("../services/getRecipes");
 const getDBRecipeInfo = require("../services/getDBRecipeInfo");
 const getRecipeInfo = require("../services/getRecipeInfo");
 const postDBRecipe = require("../services/postDBRecipe");
+const deleteDBRecipe = require("../services/deleteDBRecipe");
 
 const recipes = Router();
 recipes.get("/", async (req, res) => {
@@ -65,6 +66,17 @@ recipes.post("/", async (req, res) => {
   try {
     let response = await postDBRecipe(title, readyInMinutes, servings, image, healthScore, score, summary, ingredients, steps, diets);
     res.status(201).send(response);
+  } catch (error) {
+    res.status(409).send(error.message);
+  }
+});
+
+recipes.delete("/", async (req, res) => {
+  const { id } = req.query;
+  try {
+    let response = await deleteDBRecipe(id);
+    res.status(200).send(response);
+
   } catch (error) {
     res.status(409).send(error.message);
   }
