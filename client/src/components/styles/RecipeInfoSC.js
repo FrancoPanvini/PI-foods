@@ -41,6 +41,8 @@ export const Container = styled.div`
 export const Title = styled.div`
   grid-area: Title;
   margin: 0;
+  display: flex;
+
   & h1 {
     text-decoration: none;
     color: black;
@@ -49,13 +51,45 @@ export const Title = styled.div`
   }
 `;
 
-export const Image = styled.img`
+export const Image = styled.div`
   grid-area: Imagen;
   height: 100%;
   width: 100%;
   margin: 0;
-  object-fit: cover;
-  border-top-right-radius: 15px;
+  position: absolute;
+
+  & img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-top-right-radius: 15px;
+  }
+
+  & > div {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  & button {
+    margin-left: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+
+    font-size: 1.5rem;
+    color: var(--italian-flag-white);
+
+    background-color: var(--italian-flag-red-traslucent);
+    border: solid 0px transparent;
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--italian-flag-red);
+    }
+  }
 `;
 
 export const Time = styled.div`

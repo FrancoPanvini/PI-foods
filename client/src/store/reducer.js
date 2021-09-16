@@ -1,4 +1,4 @@
-import { LOADING, NORESULTS, GETRECIPES, PAGINATIONINDEXES, ORDER, FILTERBYDIET, GETDIETS } from "./actions";
+import { LOADING, NORESULTS, GETRECIPES, PAGINATIONINDEXES, ORDER, FILTERBYDIET, GETDIETS, DELETERECIPE } from "./actions";
 
 const initialState = {
   recipes: [],
@@ -20,6 +20,14 @@ function reducer(state = initialState, action) {
     }
     case GETRECIPES: {
       return { ...state, recipes: action.payload, allrecipes: action.payload, loading: false, noresults: false };
+    }
+    case DELETERECIPE: {
+      console.log("legue");
+      return {
+        ...state,
+        recipes: state.recipes.filter(recipe => recipe.id !== action.payload),
+        allrecipes: state.allrecipes.filter(recipe => recipe.id !== action.payload),
+      };
     }
     case GETDIETS: {
       return { ...state, diets: action.payload };

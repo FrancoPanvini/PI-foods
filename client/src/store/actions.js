@@ -10,6 +10,7 @@ export const NORESULTS = "NORESULTS";
 export const PAGINATIONINDEXES = "PAGINATIONINDEXES";
 export const ORDER = "ORDER";
 export const FILTERBYDIET = "FILTERBYDIET";
+export const DELETERECIPE = "DELETERECIPE";
 
 export const getRecipes = name => {
   return function (dispatch) {
@@ -45,4 +46,8 @@ export const orderBy = order => {
 
 export const filterByDiet = diets => {
   return { type: FILTERBYDIET, payload: diets };
+};
+export const deleteRecipe = recipeId => {
+  console.log('action')
+  return { type: DELETERECIPE, payload: recipeId };
 };
