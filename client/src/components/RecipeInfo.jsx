@@ -79,14 +79,16 @@ function RecipeInfo() {
             </Title>
             <Image>
               <img src={recipe.image} alt="not available" />
-              <div>
-                <button>
-                  <FaEdit />
-                </button>
-                <button onClick={handleDeleteClick}>
-                  <AiFillDelete />
-                </button>
-              </div>
+              {source === "db" && (
+                <div>
+                  <button>
+                    <FaEdit />
+                  </button>
+                  <button onClick={handleDeleteClick}>
+                    <AiFillDelete />
+                  </button>
+                </div>
+              )}
             </Image>
             <Time>
               <BiTimeFive />
