@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //? ACTIONS
@@ -20,6 +21,7 @@ function AddRecipe() {
   const dispatch = useDispatch();
   const diets = useSelector(state => state.diets);
   const [ingredients, setIngredients] = useState([]);
+  const history = useHistory();
 
   const [input, setInput] = useState({
     title: "",
@@ -112,8 +114,11 @@ function AddRecipe() {
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       postRecipe(input)
-        .then(() => {
+        .then(response => {
           setAdded(true);
+          setTimeout(() => {
+            history.push(`/home/recipe/db/${response.data.id}`);
+          }, 2000);
         })
         .catch(error => console.error(error));
     }
