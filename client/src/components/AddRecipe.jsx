@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //? ACTIONS
-import { getDiets } from "../store/actions";
+import { getDiets, getRecipes } from "../store/actions";
 
 //? SERVICES
 import axiosIngredients from "../services/getIngredients";
@@ -116,6 +116,7 @@ function AddRecipe() {
       postRecipe(input)
         .then(response => {
           setAdded(true);
+          dispatch(getRecipes("", dispatch));
           setTimeout(() => {
             history.push(`/home/recipe/db/${response.data.id}`);
           }, 2000);

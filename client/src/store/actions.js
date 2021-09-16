@@ -48,6 +48,5 @@ export const filterByDiet = diets => {
   return { type: FILTERBYDIET, payload: diets };
 };
 export const deleteRecipe = recipeId => {
-  console.log('action')
   return { type: DELETERECIPE, payload: recipeId };
 };

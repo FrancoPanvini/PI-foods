@@ -22,7 +22,6 @@ function reducer(state = initialState, action) {
       return { ...state, recipes: action.payload, allrecipes: action.payload, loading: false, noresults: false };
     }
     case DELETERECIPE: {
-      console.log("legue");
       return {
         ...state,
         recipes: state.recipes.filter(recipe => recipe.id !== action.payload),
