@@ -18,17 +18,17 @@ function Navbar() {
       </Title>
       <Bar>
         <NavLink exact to="/home">
-          <h4>Las Recetas</h4>
+          <h4>The Recipes</h4>
         </NavLink>
         <NavLink exact to="/home/add">
-          <h4>Add Receta</h4>
+          <h4>Add Recipe</h4>
         </NavLink>
-        <NavLink exact to="/about">
+        {/* <NavLink exact to="/about">
           <h4>About me</h4>
         </NavLink>
         <NavLink exact to="/help">
           <h4>Help</h4>
-        </NavLink>
+        </NavLink> */}
       </Bar>
     </Nav>
   );
