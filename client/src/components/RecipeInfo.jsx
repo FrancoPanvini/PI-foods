@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 
@@ -81,9 +82,11 @@ function RecipeInfo() {
               <img src={recipe.image} alt="not available" />
               {source === "db" && (
                 <div>
-                  <button>
-                    <FaEdit />
-                  </button>
+                  <Link to={`/home/add/${recipe.id}`}>
+                    <button>
+                      <FaEdit />
+                    </button>
+                  </Link>
                   <button onClick={handleDeleteClick}>
                     <AiFillDelete />
                   </button>

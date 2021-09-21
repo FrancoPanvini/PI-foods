@@ -6,6 +6,7 @@ const getRecipes = require("../services/getRecipes");
 const getDBRecipeInfo = require("../services/getDBRecipeInfo");
 const getRecipeInfo = require("../services/getRecipeInfo");
 const postDBRecipe = require("../services/postDBRecipe");
+const putDBRecipe = require("../services/putDBRecipe");
 const deleteDBRecipe = require("../services/deleteDBRecipe");
 
 const recipes = Router();
@@ -71,12 +72,22 @@ recipes.post("/", async (req, res) => {
   }
 });
 
+recipes.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, readyInMinutes, servings, image, healthScore, score, summary, Ingredients, Steps, Diets } = req.body;
+  try {
+    let response = await putDBRecipe(id, title, readyInMinutes, servings, image, healthScore, score, summary, Ingredients, Steps, Diets);
+    res.status(201).send(response);
+  } catch (error) {
+    res.status(409).send(error.message);
+  }
+});
+
 recipes.delete("/", async (req, res) => {
   const { id } = req.query;
   try {
     let response = await deleteDBRecipe(id);
     res.status(200).send(response);
-
   } catch (error) {
     res.status(409).send(error.message);
   }
