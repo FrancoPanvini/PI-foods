@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+//? COMPONENTS
+import ConfirmPopUp from "./ConfirmPopUp";
+
 //? ACTIONS
 import { getDiets, getRecipes } from "../store/actions";
 
@@ -80,6 +83,7 @@ function UpdateRecipe() {
 
   const [errors, setErrors] = useState({});
   const [updated, setUpdated] = useState(false);
+  const [popUp, setPopUp] = useState(false);
 
   //* Function to add more steps
   function handleClickAddStep(e) {
@@ -151,137 +155,171 @@ function UpdateRecipe() {
     const errors = validateForm(input);
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
-      putRecipe(input)
-        .then(response => {
-          setUpdated(true);
-          dispatch(getRecipes("", dispatch));
-          setTimeout(() => {
-            history.push(`/home/recipe/db/${response.data.id}`);
-          }, 2000);
-        })
-        .catch(error => console.error(error));
+      setPopUp(true);
     }
   }
 
+  //* Function to delete after PopUp
+  function aceptPopUp() {
+    putRecipe(input)
+      .then(response => {
+        setUpdated(true);
+        dispatch(getRecipes("", dispatch));
+        setTimeout(() => {
+          history.push(`/home/recipe/db/${response.data.id}`);
+        }, 2000);
+      })
+      .catch(error => console.error(error));
+    setPopUp(false);
+  }
+
+  //* Function to cancel PopUp
+  function cancelPopUp() {
+    setPopUp(false);
+  }
+
+  //* Function to return to Info
+  function goBack() {
+    setPopUp(false);
+    history.push(`/home/recipe/db/${id}`);
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <Container>
-        <Title>
-          <label for="title">{"Title"}</label>
-          {errors.title && <span className="error"> {errors.title}</span>}
-          <input type="text" name="title" id="title" value={input.title} onChange={handleOnChange} autoComplete="off" autoFocus />
-        </Title>
-        <Image>
-          <label for="image">Image URL</label>
-          <textarea name="image" id="image" value={input.image} onChange={handleOnChange} autoComplete="off" />
-        </Image>
+    <>
+      <form onSubmit={handleSubmit}>
+        <Container>
+          <Title>
+            <label for="title">{"Title"}</label>
+            {errors.title && <span className="error"> {errors.title}</span>}
+            <input type="text" name="title" id="title" value={input.title} onChange={handleOnChange} autoComplete="off" autoFocus />
+          </Title>
+          <Image>
+            <label for="image">Image URL</label>
+            <textarea name="image" id="image" value={input.image} onChange={handleOnChange} autoComplete="off" />
+          </Image>
 
-        <Time>
-          <BiTimeFive />
-          {errors.readyInMinutes && <p className="error"> {errors.readyInMinutes}</p>}
-          <input type="number" name="readyInMinutes" value={input.readyInMinutes} onChange={handleOnChange} autoComplete="off" />
-        </Time>
-        <Servings>
-          <BsFillPeopleFill />
-          {errors.servings && <p className="error"> {errors.servings}</p>}
-          <input type="number" name="servings" value={input.servings} onChange={handleOnChange} autoComplete="off" />
-        </Servings>
-        <Score>
-          <BsStar />
-          {errors.score && <p className="error"> {errors.score}</p>}
-          <input type="number" name="score" value={input.score} onChange={handleOnChange} autoComplete="off" />
-        </Score>
-        <HealthScore>
-          <GiHealthNormal />
-          {errors.healthScore && <p className="error"> {errors.healthScore}</p>}
-          <input type="number" name="healthScore" value={input.healthScore} onChange={handleOnChange} autoComplete="off" />
-        </HealthScore>
+          <Time>
+            <BiTimeFive />
+            {errors.readyInMinutes && <p className="error"> {errors.readyInMinutes}</p>}
+            <input type="number" name="readyInMinutes" value={input.readyInMinutes} onChange={handleOnChange} autoComplete="off" />
+          </Time>
+          <Servings>
+            <BsFillPeopleFill />
+            {errors.servings && <p className="error"> {errors.servings}</p>}
+            <input type="number" name="servings" value={input.servings} onChange={handleOnChange} autoComplete="off" />
+          </Servings>
+          <Score>
+            <BsStar />
+            {errors.score && <p className="error"> {errors.score}</p>}
+            <input type="number" name="score" value={input.score} onChange={handleOnChange} autoComplete="off" />
+          </Score>
+          <HealthScore>
+            <GiHealthNormal />
+            {errors.healthScore && <p className="error"> {errors.healthScore}</p>}
+            <input type="number" name="healthScore" value={input.healthScore} onChange={handleOnChange} autoComplete="off" />
+          </HealthScore>
 
-        <Diets>
-          <label>{"Diets"}</label>
-          <div>
-            {diets.map(diet => (
-              <label key={diet.id}>
-                <input type="checkbox" name={diet.id} checked={input.Diets?.includes(diet.id.toString())} onChange={handleDietsOnChange} />
-                {diet.name}
-              </label>
-            ))}
-          </div>
-        </Diets>
-
-        <Summary>
-          <label for="summary">Summary</label>
-          {errors.summary && <span className="error"> {errors.summary}</span>}
-          <textarea name="summary" id="summary" value={input.summary} onChange={handleOnChange} autoComplete="off" />
-        </Summary>
-
-        <Ingredients>
-          <div>
-            <label>Ingredients</label>
-            <button onClick={handleClickAddIngredient}>+</button>
-            <button onClick={handleClickRestIngredient}>-</button>
-          </div>
-          {input.Ingredients?.map((ingredient, index) => (
-            <div key={index}>
-              <select id={index} defaultValue="default" name="id" onChange={handleIngredientsOnChange}>
-                <option value="default" disabled>
-                  {findIngredientName(ingredient.id)}
-                </option>
-                {ingredients.map(ingredient => {
-                  return (
-                    <option key={ingredient.id} value={ingredient.id}>
-                      {ingredient.name}
-                    </option>
-                  );
-                })}
-              </select>
-              <input
-                type="number"
-                id={index}
-                name="amount"
-                defaultValue={ingredient.amount}
-                onChange={handleIngredientsOnChange}
-                autoComplete="off"
-              />
-              <input
-                type="text"
-                id={index}
-                name="unit"
-                defaultValue={ingredient.unit}
-                onChange={handleIngredientsOnChange}
-                autoComplete="off"
-              />
+          <Diets>
+            <label>{"Diets"}</label>
+            <div>
+              {diets.map(diet => (
+                <label key={diet.id}>
+                  <input
+                    type="checkbox"
+                    name={diet.id}
+                    checked={input.Diets?.includes(diet.id.toString())}
+                    onChange={handleDietsOnChange}
+                  />
+                  {diet.name}
+                </label>
+              ))}
             </div>
-          ))}
-        </Ingredients>
+          </Diets>
 
-        <Procedure>
-          <label>Procedure</label>
-          <button onClick={handleClickAddStep}>+</button>
-          <button onClick={handleClickRestStep}>-</button>
-          <ol>
-            {input.Steps?.map(step => (
-              <li key={step.number}>
+          <Summary>
+            <label for="summary">Summary</label>
+            {errors.summary && <span className="error"> {errors.summary}</span>}
+            <textarea name="summary" id="summary" value={input.summary} onChange={handleOnChange} autoComplete="off" />
+          </Summary>
+
+          <Ingredients>
+            <div>
+              <label>Ingredients</label>
+              <button onClick={handleClickAddIngredient}>+</button>
+              <button onClick={handleClickRestIngredient}>-</button>
+            </div>
+            {input.Ingredients?.map((ingredient, index) => (
+              <div key={index}>
+                <select id={index} defaultValue="default" name="id" onChange={handleIngredientsOnChange}>
+                  <option value="default" disabled>
+                    {findIngredientName(ingredient.id)}
+                  </option>
+                  {ingredients.map(ingredient => {
+                    return (
+                      <option key={ingredient.id} value={ingredient.id}>
+                        {ingredient.name}
+                      </option>
+                    );
+                  })}
+                </select>
                 <input
-                  type="text"
-                  id={step.number}
-                  name="content"
-                  defaultValue={step.content}
-                  onChange={handleStepsOnChange}
+                  type="number"
+                  id={index}
+                  name="amount"
+                  defaultValue={ingredient.amount}
+                  onChange={handleIngredientsOnChange}
                   autoComplete="off"
                 />
-              </li>
+                <input
+                  type="text"
+                  id={index}
+                  name="unit"
+                  defaultValue={ingredient.unit}
+                  onChange={handleIngredientsOnChange}
+                  autoComplete="off"
+                />
+              </div>
             ))}
-          </ol>
-        </Procedure>
+          </Ingredients>
 
-        <Button type="submit" className={updated ? "uploaded" : false} disabled={updated}>
-          {updated ? <GiCheckMark /> : <span>SAVE</span>}
-        </Button>
-      </Container>
-    </form>
+          <Procedure>
+            <label>Procedure</label>
+            <button onClick={handleClickAddStep}>+</button>
+            <button onClick={handleClickRestStep}>-</button>
+            <ol>
+              {input.Steps?.map(step => (
+                <li key={step.number}>
+                  <input
+                    type="text"
+                    id={step.number}
+                    name="content"
+                    defaultValue={step.content}
+                    onChange={handleStepsOnChange}
+                    autoComplete="off"
+                  />
+                </li>
+              ))}
+            </ol>
+          </Procedure>
+
+          <Button type="submit" className={updated ? "uploaded" : false} disabled={updated}>
+            {updated ? <GiCheckMark /> : <span>SAVE</span>}
+          </Button>
+        </Container>
+      </form>
+      {popUp && (
+        <ConfirmPopUp
+          text="Are you sure you want to save changes??"
+          aceptText="Save"
+          cancelText="Cancel"
+          aceptPopUp={aceptPopUp}
+          cancelPopUp={cancelPopUp}
+          thirdOptionText="Exit without saving"
+          thirdOption={goBack}
+        />
+      )}
+    </>
   );
 }
 
 export default UpdateRecipe;
-

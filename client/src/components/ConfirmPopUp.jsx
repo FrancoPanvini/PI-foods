@@ -3,12 +3,15 @@ import React from "react";
 //? STYLES
 import { PopUp, Button } from "./styles/ConfirmPopUpSC";
 
-function ConfirmPopUp({ name, aceptPopUp, cancelPopUp }) {
+function ConfirmPopUp({ text, aceptText, cancelText, aceptPopUp, cancelPopUp,thirdOptionText,thirdOption }) {
   return (
     <PopUp>
-      <p>{`Are you sure you want to delete this ${name}??`}</p>
-      <Button onClick={aceptPopUp}>Delete</Button>
-      <Button onClick={cancelPopUp}>Cancel</Button>
+      <p>{text}</p>
+      <Button onClick={aceptPopUp}>{aceptText}</Button>
+      <Button onClick={cancelPopUp}>{cancelText}</Button>
+      {thirdOptionText &&
+      <Button onClick={thirdOption}>{thirdOptionText}</Button>
+      }
     </PopUp>
   );
 }

@@ -142,7 +142,15 @@ function RecipeInfo() {
           </>
         )}
       </Container>
-      {popUp && <ConfirmPopUp name="recipe" aceptPopUp={aceptPopUp} cancelPopUp={cancelPopUp} />}
+      {popUp && (
+        <ConfirmPopUp
+          text="Are you sure you want to delete this recipe??"
+          aceptText="Delete"
+          cancelText="Cancel"
+          aceptPopUp={aceptPopUp}
+          cancelPopUp={cancelPopUp}
+        />
+      )}
     </>
   );
 }

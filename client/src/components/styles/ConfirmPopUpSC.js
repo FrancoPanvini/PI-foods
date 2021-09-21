@@ -27,7 +27,7 @@ export const PopUp = styled.div`
 `;
 
 export const Button = styled.button`
-  margin: 1rem 2rem;
+  margin: 1rem 1rem;
   padding: 0.5rem;
   background-color: var(--italian-flag-red-traslucent);
   border: 2px solid transparent;
