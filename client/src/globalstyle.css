@@ -31,6 +31,8 @@ body {
   );
 
   background-size: 150px 150px;
+
+  overflow-y: scroll;
 }
 
 h1,
