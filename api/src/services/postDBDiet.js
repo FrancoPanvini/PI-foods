@@ -1,5 +1,5 @@
 const { Diet } = require("../db");
-const uploadDiets = require("./help/uploadDiets");
+// const uploadDiets = require("./help/uploadDiets");
 
 async function postDBDiet(name) {
   const [_newDiet, created] = await Diet.findOrCreate({
