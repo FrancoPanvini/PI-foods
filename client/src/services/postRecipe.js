@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosRecipes = data => {
-  return axios.post("http://localhost:3001/recipes",data);
+  return axios.post("/recipes",data);
 };
 
 export default axiosRecipes;
